@@ -1,6 +1,6 @@
 var nodemailer = require('nodemailer');
 
-function mail(email) {
+function mail(email, content) {
 
     var transporter = nodemailer.createTransport({
         host: "smtp-relay.brevo.com",
@@ -13,9 +13,9 @@ function mail(email) {
     });
     
     var mailOptions = {
-      from: 'youremail@gmail.com',
-      to: email,
-      subject: 'Sending Email using Node.js',
+      from: content ? 'contactSupport@gmail.com': 'elevanceclub@gmail.com',
+      to: content ? 'elevanceclub@gmail.com' : email ,
+      subject: content ? 'Query from a customer': `Thank you for registering! Here's what you need to do next!`,
       text: `Welcome to Elevance Club!
 
       Dear Creator,
@@ -33,6 +33,7 @@ function mail(email) {
       
       
       NOTE: THE CREATOR MUST USE ELEVANCE BRANDING FOR EVERY POST IN ORDER TO BE ELIGIBLE FOR MONTHLY REWARDS.
+
       
       
       It's designed to help you showcase our brand effectively while staying true to your unique style.
@@ -41,23 +42,25 @@ function mail(email) {
       
       Best regards,
       Elevance Team`,
-      html: `<h2>Welcome to Elevance Club!</h2>
+      html: content ? ` ${content} <br/> from Client Email: ${email}` :`<h2>Welcome to Elevance Club!</h2>
 
       Dear Creator, <br />
       
-      <br />&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspThank you for registering yourself as an Elevance creator! We're thrilled to have you on board and look forward to seeing your creativity shine. <br /><br />
+      <br />Thank you for registering yourself as an Elevance creator! We're thrilled to have you on board and look forward to seeing your creativity shine. <br /><br />
       
-      &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspJust a friendly reminder: please ensure that your Instagram account is set to public to fully participate in Elevance Club's activities and opportunities.<br /><br />
+      Just a friendly reminder: please ensure that your Instagram account is set to public to fully participate in Elevance Club's activities and opportunities.<br /><br />
       
       Additionally, we encourage you to utilize:<br />
       • Elevance Media Kit<br />
       • The Hashtag #ElevanceClub<br />
       (ALL MANDATORY)<br /><br />
       
-      It's advised to see the "how to use elevance media kit" below to know more.
+      <b>The link of the media kit and other instructions are placed below.</b>
       
       
-      <h4>NOTE: THE CREATOR MUST USE ELEVANCE BRANDING FOR EVERY POST IN ORDER TO BE ELIGIBLE FOR MONTHLY REWARDS</h4>
+      <h4>NOTE: THE CREATOR MUST USE ELEVANCE BRANDING FOR EVERY POST IN ORDER TO BE ELIGIBLE FOR MONTHLY REWARDS. 
+      <a href='https://drive.google.com/file/d/12EpXY0U-Q63PTjeB65CusOTww9ymojwC/view?usp=drive_link'>Click here</a> to download the Elevance Media Kit.
+      </h4>
       
       
       It's designed to help you showcase our brand effectively while staying true to your unique style.<br /><br />
