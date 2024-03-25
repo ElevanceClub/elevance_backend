@@ -9,6 +9,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const { sheetsBrand, sheetsCreator } = require('./sheets');
 // Configuring body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -34,6 +35,12 @@ app.post('/creatorReg', async (req, res)=> {
   console.log(req.body);
   const body = req.body;
   mail.mail(body.email, false);
+  try {
+    sheetsCreator([body.name, body.email, body.phone, body.insta, body.category])
+  } catch (error) {
+    console.log(error);
+  res.status(500).json('failure');
+  }
   const { data, error } = await supabase
   .from('Creators')
   .insert([{email: body.email, name: body.name, insta_id: body.insta, ph_no: body.phone, category: body.category} ])
@@ -42,8 +49,6 @@ app.post('/creatorReg', async (req, res)=> {
 if (error){
   console.log(error);
   res.status(500).json('failure');
-} else{
-  console.log(data);
 } 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -56,6 +61,12 @@ app.post('/brandReg', async (req, res)=> {
   
   console.log(req.body);
   const body = req.body;
+  try {
+    sheetsBrand([body.brand, body.email, body.phone, body.insta, body.targetAudience, body.budgetRange])
+  } catch (error) {
+    console.log(error);
+  res.status(500).json('failure');
+  }
   const { data, error } = await supabase
   .from('Brand')
   .insert([{email: body.email, brand: body.brand, insta_id: body.insta, contact_no: body.phone, target_audience: body.targetAudience, budget_range: body.budgetRange} ])
@@ -64,8 +75,6 @@ app.post('/brandReg', async (req, res)=> {
 if (error){
   console.log(error);
   res.status(500).json('failure');
-} else{
-  console.log(data);
 } 
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
